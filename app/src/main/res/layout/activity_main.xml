@@ -1,0 +1,70 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#6b6d6b">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/kep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/feladat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fffb64"
+        android:textStyle="bold"
+        android:padding="15dp"
+        android:layout_gravity="center"/>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#6b6d6b"/>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_alignParentRight="true"
+            android:onClick="nextOnClick"
+            android:text="Következő"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="30dp"
+            android:paddingTop="10dp"
+            android:background="@drawable/next_selector"/>
+
+        <TextView
+            android:id="@+id/feladatszam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/next"
+            android:layout_centerHorizontal="true"
+            android:textColor="#fffb64"/>
+
+        <TextView
+            android:id="@+id/pontszam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/next"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="10dp"
+            android:textColor="#fffb64"/>
+    </RelativeLayout>
+
+</LinearLayout>
