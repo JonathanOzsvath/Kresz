@@ -17,6 +17,18 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/textViewTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fffb64"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.ProgressBar.Horizontal"/>
+
+    <TextView
         android:id="@+id/feladat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
