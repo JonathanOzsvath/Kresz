@@ -24,7 +24,7 @@
             android:id="@+id/textViewTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#fffb64"
+            android:textColor="@color/feliratSarga"
             android:layout_below="@id/kep"
             android:gravity="center"/>
 
@@ -42,7 +42,7 @@
             android:layout_below="@id/progressBar"
             android:layout_gravity="center"
             android:padding="15dp"
-            android:textColor="#fffb64"
+            android:textColor="@color/feliratSarga"
             android:textStyle="bold" />
 
         <ListView
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/next"
             android:layout_centerHorizontal="true"
-            android:textColor="#fffb64"
+            android:textColor="@color/feliratSarga"
             />
 
         <TextView
@@ -91,7 +91,7 @@
             android:layout_alignBaseline="@id/next"
             android:layout_alignParentLeft="true"
             android:layout_margin="10dp"
-            android:textColor="#fffb64" />
+            android:textColor="@color/feliratSarga"/>
     </RelativeLayout>
 
 </LinearLayout>

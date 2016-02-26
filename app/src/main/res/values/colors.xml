@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="hatter" type="color">#6b6d6b</item>
+    <item name="gombPressedStart" type="color">#A5AB8B</item>
+    <item name="gombKek" type="color">#82A1B5</item>
+    <item name="gombStart" type="color">#C9C9C9</item>
+    <item name="gombEnd" type="color">#454545</item>
+    <item name="gombSzegely" type="color">#878787</item>
+    <item name="feliratSarga" type="color">#fffb64</item>
+</resources>
