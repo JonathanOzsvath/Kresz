@@ -2,6 +2,7 @@ package com.example.jonat.kresz;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.DisplayMetrics;
@@ -42,6 +43,8 @@ public class MainActivity extends Activity {
     int aktfeladat, aktpontszam;
     private TextView feladatSzam, pontSzam;
     private CounterClass timer;
+    int time;
+    long millis;
     private ProgressBar progressBar;
 
     @Override
@@ -55,17 +58,18 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
 
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             szam = savedInstanceState.getInt("feladatSzam");
             temakor = savedInstanceState.getInt("temakor");
             aktfeladat = savedInstanceState.getInt("aktFeladat");
             aktpontszam = savedInstanceState.getInt("aktPontszam");
-        }else {
+            time = (int) savedInstanceState.getLong("millis");
+            savedInstanceState.clear();
+        } else {
             temakor = 0;
             aktfeladat = 1;
             aktpontszam = 0;
-            timer = new CounterClass(60000,1000);
-            timer.start();
+            time = 60000;
 
             try {
                 Random r = new Random();
@@ -78,9 +82,13 @@ public class MainActivity extends Activity {
             }
         }
 
+        timer = new CounterClass(time, 1000);
+        timer.start();
         findView();
 
-        //feladat(703479);
+        //feladat(721079);
+        //feladat(703566);
+        //feladat(703478);
         feladat(szam);
 
         progressBar.setMax(60);
@@ -91,40 +99,53 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CheckBox checkBox = (CheckBox) view.findViewById(R.id.ch);
-                checkBox.setChecked(!checkBox.isChecked());
-                TextView textView = (TextView) view.findViewById(R.id.tv);
 
-                if (position == helyes) {
-                    changeColor(helyes, Color.GREEN);
-                    //textView.setBackgroundColor(Color.rgb(166,255,151));
-                    Toast.makeText(MainActivity.this, "helyes", Toast.LENGTH_LONG).show();
-                    try {
-                        aktpontszam += Integer.parseInt(obj.getJSONArray("groups")
-                                .getJSONObject(temakor).getString("score"));
-                        pontSzam.setText(aktpontszam + "/75");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                if (listCheck()) {
+                    listEnableDisable(false);
                 } else {
-                    //textView.setTextColor(Color.RED);
-                    changeColor(position,Color.RED);
-                    changeColor(helyes,Color.GREEN);
-                    Toast.makeText(MainActivity.this, "rossz", Toast.LENGTH_LONG).show();
-                }
+                    checkBox.setChecked(!checkBox.isChecked());
+                    if (position == helyes) {
+                        changeColor(helyes, Color.GREEN);
+                        Toast.makeText(MainActivity.this, "helyes", Toast.LENGTH_LONG).show();
+                        try {
+                            aktpontszam += Integer.parseInt(obj.getJSONArray("groups")
+                                    .getJSONObject(temakor).getString("score"));
+                            pontSzam.setText(aktpontszam + "/75");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        changeColor(position, Color.RED);
+                        changeColor(helyes, Color.GREEN);
+                        Toast.makeText(MainActivity.this, "rossz", Toast.LENGTH_LONG).show();
+                    }
 
-                listView.setEnabled(false);
-                timer.cancel();
+                    listEnableDisable(false);
+                    timer.cancel();
+                }
             }
         });
     }
 
-    public void changeItemHeight(){
-        TextView tv= (TextView) listView.getChildAt(0).findViewById(R.id.tv);
-        listView.getChildAt(0).setMinimumHeight(100);
+    public boolean listCheck() {
+        for (int i = 0; i <= listView.getLastVisiblePosition()-listView.getFirstVisiblePosition(); i++) {
+            CheckBox checkBox = (CheckBox) listView.getChildAt(i).findViewById(R.id.ch);
+            if (checkBox.isChecked()) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void changeColor(int x, int color){
-        TextView tv= (TextView) listView.getChildAt(x).findViewById(R.id.tv);
+    public void listEnableDisable(boolean enableDisable) {
+        for (int i = 0; i <= listView.getLastVisiblePosition()-listView.getFirstVisiblePosition(); i++) {
+            CheckBox checkBox = (CheckBox) listView.getChildAt(i).findViewById(R.id.ch);
+            checkBox.setEnabled(enableDisable);
+        }
+    }
+
+    public void changeColor(int x, int color) {
+        TextView tv = (TextView) listView.getChildAt(x).findViewById(R.id.tv);
         tv.setTextColor(color);
     }
 
@@ -140,9 +161,10 @@ public class MainActivity extends Activity {
                 feladat(szam);
                 aktfeladat++;
                 feladatSzam.setText(aktfeladat + "/55");
-                listView.setEnabled(true);
 
+                time = 60000;
                 timer.cancel();
+                timer = new CounterClass(time, 1000);
                 timer.start();
                 textViewTime.setTextColor(Color.parseColor("#fffb64"));
             } catch (JSONException e) {
@@ -169,14 +191,13 @@ public class MainActivity extends Activity {
 
                 DisplayMetrics displaymetrics = new DisplayMetrics();
                 getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-                int height = displaymetrics.heightPixels;
-                int width = displaymetrics.widthPixels;
-                //imageView.setMaxHeight(height / 3);
+                imageView.setBackgroundResource(R.drawable.image);
 
                 imageView.setImageResource(i);
 
             } else {
                 imageView.setImageResource(0);
+                imageView.setBackgroundResource(0);
             }
 
             //Válasz lehetőségek
@@ -244,6 +265,7 @@ public class MainActivity extends Activity {
         outState.putInt("temakor", temakor);
         outState.putInt("aktFeladat", aktfeladat);
         outState.putInt("aktPontszam", aktpontszam);
+        outState.putLong("millis", millis);
     }
 
 
@@ -262,7 +284,7 @@ public class MainActivity extends Activity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            long millis = millisUntilFinished;
+            millis = millisUntilFinished;
             String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
                     TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
                     TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
@@ -274,8 +296,11 @@ public class MainActivity extends Activity {
 
         @Override
         public void onFinish() {
+            millis = 1;
             textViewTime.setText("Az idő lejárt.");
             textViewTime.setTextColor(Color.RED);
+            listEnableDisable(false);
+            changeColor(helyes, Color.GREEN);
         }
     }
 }

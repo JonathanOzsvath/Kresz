@@ -14,42 +14,55 @@
             android:id="@+id/kep"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:maxHeight="250dp"
-            android:adjustViewBounds="true"
+            android:layout_alignParentRight="true"
+            android:maxHeight="175dp"
             android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:layout_marginRight="20dp"
             android:background="@drawable/image"/>
 
         <TextView
             android:id="@+id/textViewTime"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#fffb64"
-            android:layout_below="@id/kep"
-            android:gravity="center"/>
+            android:layout_alignParentLeft="true"
+            />
 
         <ProgressBar
             android:id="@+id/progressBar"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewTime" />
+            android:layout_below="@id/textViewTime"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/kep"/>
 
         <TextView
             android:id="@+id/feladat"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/progressBar"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/kep"
             android:layout_gravity="center"
             android:padding="15dp"
             android:textColor="#fffb64"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/lista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5">
 
         <ListView
             android:id="@+id/list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/feladat"
             android:background="#6b6d6b" />
 
     </RelativeLayout>
@@ -58,7 +71,7 @@
         android:id="@+id/info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="30dp">
+        android:layout_weight="1">
 
         <Button
             android:id="@+id/next"
@@ -72,8 +85,7 @@
             android:paddingLeft="30dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
-            android:text="Következő"
-            />
+            android:text="Következő" />
 
         <TextView
             android:id="@+id/feladatszam"
@@ -81,8 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/next"
             android:layout_centerHorizontal="true"
-            android:textColor="#fffb64"
-            />
+            android:textColor="#fffb64" />
 
         <TextView
             android:id="@+id/pontszam"
