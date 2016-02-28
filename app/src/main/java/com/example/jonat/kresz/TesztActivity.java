@@ -32,7 +32,7 @@ public class TesztActivity extends Activity {
     private List<ListViewItem> mItems;
     private ImageView imageView;
     private ListView listView;
-    public ListViewAdapter listViewAdapter;
+    private ListViewAdapter listViewAdapter;
     private TextView feladat, textViewTime;
     private JSONObject obj;
     private int szam;

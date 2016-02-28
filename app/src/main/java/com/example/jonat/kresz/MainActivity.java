@@ -23,4 +23,12 @@ public class MainActivity extends Activity {
             startActivity(i);
         }
     }
+
+    public void osszesOnClick (View v){
+        if (v.getId() == R.id.osszes){
+            Intent i = new Intent();
+            i.setClass(this,TemakorActivity.class);
+            startActivity(i);
+        }
+    }
 }

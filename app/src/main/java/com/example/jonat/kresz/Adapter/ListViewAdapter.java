@@ -29,7 +29,6 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         if (convertView == null){
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.listview_item,parent,false);
-            //convertView.setMinimumHeight(convertView.getHeight());
 
             viewHolder = new ViewHolder();
             viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.ch);
