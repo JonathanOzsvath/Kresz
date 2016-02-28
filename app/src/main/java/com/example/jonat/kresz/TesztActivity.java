@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Parcelable;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
@@ -62,6 +63,7 @@ public class TesztActivity extends Activity {
             aktfeladat = savedInstanceState.getInt("aktFeladat");
             aktpontszam = savedInstanceState.getInt("aktPontszam");
             time = (int) savedInstanceState.getLong("millis");
+            mItems = savedInstanceState.getParcelableArrayList("mItems");
             savedInstanceState.clear();
         } else {
             temakor = 0;
@@ -173,8 +175,6 @@ public class TesztActivity extends Activity {
 
     public void feladat(int szam) {
         try {
-            mItems = new ArrayList<ListViewItem>();
-
             //feladat lekérdezése
             String tmp = obj.getJSONObject("questions").getJSONObject(String.valueOf(szam)).
                     getString("question");
@@ -199,25 +199,29 @@ public class TesztActivity extends Activity {
             }
 
             //Válasz lehetőségek
-            int valaszokSzama = obj.getJSONObject("questions").getJSONObject(String.valueOf(szam)).
-                    getJSONArray("choices").length();
-            ArrayList<Integer> keveres = new ArrayList<>();
-            ArrayList<Integer> keveres2 = new ArrayList<>();
-            for (int i = 0; i < valaszokSzama; i++) {
-                keveres.add(i);
-            }
-            Random r = new Random();
-            while (keveres.size() > 0) {
-                int i = r.nextInt(keveres.size());
-                keveres2.add(keveres.get(i));
-                keveres.remove(i);
-            }
-            for (int i = 0; i < valaszokSzama; i++) {
-                mItems.add(new ListViewItem(new CheckBox(TesztActivity.this),
-                        obj.getJSONObject("questions").getJSONObject(String.valueOf(szam)).
-                                getJSONArray("choices").getString(keveres2.get(i))));
-                if (keveres2.get(i) == 0) {
-                    helyes = i;
+            if (mItems == null) {
+                mItems = new ArrayList<ListViewItem>();
+
+                int valaszokSzama = obj.getJSONObject("questions").getJSONObject(String.valueOf(szam)).
+                        getJSONArray("choices").length();
+                ArrayList<Integer> keveres = new ArrayList<>();
+                ArrayList<Integer> keveres2 = new ArrayList<>();
+                for (int i = 0; i < valaszokSzama; i++) {
+                    keveres.add(i);
+                }
+                Random r = new Random();
+                while (keveres.size() > 0) {
+                    int i = r.nextInt(keveres.size());
+                    keveres2.add(keveres.get(i));
+                    keveres.remove(i);
+                }
+                for (int i = 0; i < valaszokSzama; i++) {
+                    mItems.add(new ListViewItem(new CheckBox(TesztActivity.this),
+                            obj.getJSONObject("questions").getJSONObject(String.valueOf(szam)).
+                                    getJSONArray("choices").getString(keveres2.get(i))));
+                    if (keveres2.get(i) == 0) {
+                        helyes = i;
+                    }
                 }
             }
 
@@ -264,6 +268,8 @@ public class TesztActivity extends Activity {
         outState.putInt("aktFeladat", aktfeladat);
         outState.putInt("aktPontszam", aktpontszam);
         outState.putLong("millis", millis);
+        //outState.putParcelable("mItems", (Parcelable) mItems);
+        outState.putParcelableArrayList("mItems", (ArrayList<? extends Parcelable>) mItems);
     }
 
 
