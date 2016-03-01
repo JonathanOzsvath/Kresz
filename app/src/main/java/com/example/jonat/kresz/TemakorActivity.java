@@ -2,10 +2,13 @@ package com.example.jonat.kresz;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.jonat.kresz.Adapter.TemakorListViewAdapter;
@@ -44,6 +47,18 @@ public class TemakorActivity extends ListActivity {
 
         temakorListViewAdapter = new TemakorListViewAdapter(getApplicationContext(),mItems);
         setListAdapter(temakorListViewAdapter);
+
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle b = new Bundle();
+                b.putInt("temakor", position);
+                Intent i = new Intent();
+                i.setClass(TemakorActivity.this,FeladatActivity.class);
+                i.putExtras(b);
+                startActivity(i);
+            }
+        });
     }
 
     public String loadJSONFromAsset() {
