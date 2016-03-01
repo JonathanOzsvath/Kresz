@@ -45,6 +45,7 @@ public class TesztActivity extends Activity {
     int time;
     long millis;
     private ProgressBar progressBar;
+    int click;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +65,13 @@ public class TesztActivity extends Activity {
             aktpontszam = savedInstanceState.getInt("aktPontszam");
             time = (int) savedInstanceState.getLong("millis");
             mItems = savedInstanceState.getParcelableArrayList("mItems");
-            savedInstanceState.clear();
+            click = savedInstanceState.getInt("click");
+            helyes = savedInstanceState.getInt("helyes");
         } else {
             temakor = 0;
             aktfeladat = 1;
             aktpontszam = 0;
+            click = -1;
             time = 60000;
 
             try {
@@ -84,6 +87,7 @@ public class TesztActivity extends Activity {
 
         timer = new CounterClass(time, 1000);
         timer.start();
+
         findView();
 
         //feladat(721079);
@@ -99,6 +103,7 @@ public class TesztActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CheckBox checkBox = (CheckBox) view.findViewById(R.id.ch);
+                click = position;
 
                 if (listCheck()) {
                     listEnableDisable(false);
@@ -128,7 +133,7 @@ public class TesztActivity extends Activity {
     }
 
     public boolean listCheck() {
-        for (int i = 0; i <= listView.getLastVisiblePosition()-listView.getFirstVisiblePosition(); i++) {
+        for (int i = 0; i <= listView.getLastVisiblePosition() - listView.getFirstVisiblePosition(); i++) {
             CheckBox checkBox = (CheckBox) listView.getChildAt(i).findViewById(R.id.ch);
             if (checkBox.isChecked()) {
                 return true;
@@ -138,13 +143,16 @@ public class TesztActivity extends Activity {
     }
 
     public void listEnableDisable(boolean enableDisable) {
-        for (int i = 0; i <= listView.getLastVisiblePosition()-listView.getFirstVisiblePosition(); i++) {
+        for (int i = 0; i <= listView.getLastVisiblePosition() - listView.getFirstVisiblePosition(); i++) {
             CheckBox checkBox = (CheckBox) listView.getChildAt(i).findViewById(R.id.ch);
             checkBox.setEnabled(enableDisable);
         }
     }
 
     public void changeColor(int x, int color) {
+        if (listView == null) {
+            listView = (ListView) findViewById(R.id.list);
+        }
         TextView tv = (TextView) listView.getChildAt(x).findViewById(R.id.tv);
         tv.setTextColor(color);
     }
@@ -158,6 +166,8 @@ public class TesztActivity extends Activity {
                         getJSONArray("questions").getString(r.nextInt(obj.getJSONArray("groups").
                         getJSONObject(temakor).
                         getJSONArray("questions").length())));
+                mItems = null;
+                click = -1;
                 feladat(szam);
                 aktfeladat++;
                 feladatSzam.setText(aktfeladat + "/55");
@@ -228,7 +238,6 @@ public class TesztActivity extends Activity {
             listViewAdapter = new ListViewAdapter(TesztActivity.this, mItems);
             listView.setAdapter(listViewAdapter);
 
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -268,8 +277,9 @@ public class TesztActivity extends Activity {
         outState.putInt("aktFeladat", aktfeladat);
         outState.putInt("aktPontszam", aktpontszam);
         outState.putLong("millis", millis);
-        //outState.putParcelable("mItems", (Parcelable) mItems);
         outState.putParcelableArrayList("mItems", (ArrayList<? extends Parcelable>) mItems);
+        outState.putInt("click", click);
+        outState.putInt("helyes", helyes);
     }
 
 

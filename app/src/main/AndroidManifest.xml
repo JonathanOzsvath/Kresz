@@ -18,11 +18,12 @@
         </activity>
         <activity
             android:name=".TesztActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize">
         </activity>
         <activity
             android:name=".TemakorActivity"
-            android:label="@string/title_activity_list" >
+            android:label="@string/title_activity_list">
         </activity>
     </application>
 
