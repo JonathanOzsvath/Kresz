@@ -31,4 +31,15 @@ public class MainActivity extends Activity {
             startActivity(i);
         }
     }
+
+    public void vegeOnClick (View v){
+        if (v.getId() == R.id.vege){
+            Bundle b = new Bundle();
+            b.putInt("pont", 60);
+            Intent i = new Intent();
+            i.setClass(this,Vege.class);
+            i.putExtras(b);
+            startActivity(i);
+        }
+    }
 }

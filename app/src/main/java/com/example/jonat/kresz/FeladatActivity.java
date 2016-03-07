@@ -1,10 +1,13 @@
 package com.example.jonat.kresz;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.example.jonat.kresz.Adapter.FeladatListViewAdapter;
 import com.example.jonat.kresz.Data.FeladatListViewItem;
@@ -37,10 +40,13 @@ public class FeladatActivity extends ListActivity {
             obj = new JSONObject(loadJSONFromAsset());
 
             mItems = new ArrayList<>();
-            int feladathossz = obj.getJSONArray("groups").getJSONObject(temakor).getJSONArray("questions").length();
+            int feladathossz = obj.getJSONArray("groups").getJSONObject(temakor)
+                    .getJSONArray("questions").length();
             for (int i = 0; i < feladathossz; i++) {
-                String feladatokSzama = obj.getJSONArray("groups").getJSONObject(temakor).getJSONArray("questions").getString(i);
-                String cim = obj.getJSONObject("questions").getJSONObject(feladatokSzama).getString("question");
+                String feladatokSzama = obj.getJSONArray("groups").getJSONObject(temakor)
+                        .getJSONArray("questions").getString(i);
+                String cim = obj.getJSONObject("questions").getJSONObject(feladatokSzama)
+                        .getString("question");
                 mItems.add(new FeladatListViewItem(cim));
             }
 
@@ -50,6 +56,19 @@ public class FeladatActivity extends ListActivity {
 
         feladatListViewAdapter = new FeladatListViewAdapter(getApplication(),mItems);
         setListAdapter(feladatListViewAdapter);
+
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle b = new Bundle();
+                b.putInt("temakor",temakor);
+                b.putInt("szam", position);
+                Intent i = new Intent();
+                i.setClass(FeladatActivity.this, KerdesActivity.class);
+                i.putExtras(b);
+                startActivity(i);
+            }
+        });
     }
 
     public String loadJSONFromAsset() {

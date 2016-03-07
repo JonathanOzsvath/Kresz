@@ -46,6 +46,7 @@ public class TesztActivity extends Activity {
     long millis;
     private ProgressBar progressBar;
     int click;
+    Parcelable state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class TesztActivity extends Activity {
             mItems = savedInstanceState.getParcelableArrayList("mItems");
             click = savedInstanceState.getInt("click");
             helyes = savedInstanceState.getInt("helyes");
+            state = savedInstanceState.getParcelable("state");
         } else {
             temakor = 0;
             aktfeladat = 1;
@@ -238,6 +240,10 @@ public class TesztActivity extends Activity {
             listViewAdapter = new ListViewAdapter(TesztActivity.this, mItems);
             listView.setAdapter(listViewAdapter);
 
+            if (state != null) {
+                listView.onRestoreInstanceState(state);
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -280,6 +286,7 @@ public class TesztActivity extends Activity {
         outState.putParcelableArrayList("mItems", (ArrayList<? extends Parcelable>) mItems);
         outState.putInt("click", click);
         outState.putInt("helyes", helyes);
+        outState.putParcelable("state", state);
     }
 
 

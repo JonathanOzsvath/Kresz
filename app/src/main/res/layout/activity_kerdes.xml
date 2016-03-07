@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#6b6d6b"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/image1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/kep1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="true"
+            android:background="@drawable/image"
+            android:maxHeight="250dp"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/feladat1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/kep1"
+            android:layout_gravity="center"
+            android:padding="15dp"
+            android:textColor="@color/feliratSarga"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/list1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/feladat1"
+            android:background="#6b6d6b" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/info1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="30dp">
+
+        <Button
+            android:id="@+id/next1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="bottom"
+            android:background="@drawable/next_selector"
+            android:onClick="nextOnClick"
+            android:paddingBottom="10dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:text="Következő" />
+
+        <Button
+            android:id="@+id/back1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/back_selector"
+            android:onClick="backOnClick"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="30dp"
+            android:paddingTop="10dp"
+            android:text="Vissza" />
+    </RelativeLayout>
+
+</LinearLayout>

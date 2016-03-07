@@ -18,16 +18,19 @@
         </activity>
         <activity
             android:name=".TesztActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name" />
         <activity
             android:name=".TemakorActivity"
-            android:label="@string/title_activity_list" >
-        </activity>
+            android:label="@string/title_activity_list" />
         <activity
             android:name=".FeladatActivity"
-            android:label="@string/title_activity_feladat" >
+            android:label="@string/title_activity_feladat" />
+        <activity
+            android:name=".KerdesActivity"
+            android:label="@string/title_activity_kerdes" />
+        <activity
+            android:name=".Vege"
+            android:label="@string/title_activity_vege" >
         </activity>
     </application>
 
