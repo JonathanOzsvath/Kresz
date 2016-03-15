@@ -12,18 +12,18 @@
     </item>
 
     <!-- Progress -->
-    <item android:id="@android:id/progress">
+    <item android:id="@+id/progress1">
         <!-- Rotation of the progress to start at the top-->
         <rotate
             android:fromDegrees="-90"
             android:pivotX="50%"
             android:pivotY="50%"
             android:toDegrees="-90">
-            <shape
+            <shape android:id="@+id/shape"
                 android:shape="ring"
                 android:useLevel="true">
                 <solid
-                    android:color="#61bcf9"/>
+                    android:color="@color/pBZold"/>
             </shape>
         </rotate>
     </item>

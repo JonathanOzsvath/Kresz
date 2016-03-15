@@ -7,4 +7,6 @@
     <item name="gombEnd" type="color">#454545</item>
     <item name="gombSzegely" type="color">#878787</item>
     <item name="feliratSarga" type="color">#fffb64</item>
+    <item name="pBZold" type="color">#04d60f</item>
+    <item name="pBPiros" type="color">#ff0f00</item>
 </resources>

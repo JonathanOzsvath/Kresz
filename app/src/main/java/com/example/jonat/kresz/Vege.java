@@ -1,10 +1,8 @@
 package com.example.jonat.kresz;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -12,6 +10,10 @@ public class Vege extends Activity {
 
     int pont;
     int osszpont = 75;
+    int szazalek;
+
+    ProgressBar progressBar;
+    TextView progressBarTextView, eredmenyUzenet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +25,20 @@ public class Vege extends Activity {
             pont = b.getInt("pont");
         } else pont = 0;
 
-        int szazalek = (int) (pont / ((double)osszpont/100.0));
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.circularProgressBar);
+        szazalek = (int) (pont / ((double) osszpont / 100.0));
 
+        progressBar = (ProgressBar) findViewById(R.id.circularProgressBar);
+        progressBarTextView = (TextView) findViewById(R.id.progressBarTextView);
+        eredmenyUzenet = (TextView) findViewById(R.id.eredmenyUzenet);
+
+        progressBarTextView.setText(String.valueOf(szazalek) + "%");
+        if (pont >= 65) {
+            progressBar.setProgressDrawable(getResources()
+                    .getDrawable(R.drawable.circular_progress_bar_green));
+            progressBarTextView.setTextColor(getResources().getColor(R.color.pBZold));
+            eredmenyUzenet.setTextColor(getResources().getColor(R.color.pBZold));
+        }
         progressBar.setProgress(szazalek);
-
-        TextView textView = (TextView) findViewById(R.id.progressBarTextView);
-
-        textView.setText(String.valueOf(szazalek) + "%");
     }
 
 
