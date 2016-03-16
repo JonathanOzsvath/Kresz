@@ -24,8 +24,8 @@ public class ListViewItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(checkBox);
         dest.writeString(answer);
+        dest.writeValue(checkBox);
     }
 
     private ListViewItem(Parcel in){

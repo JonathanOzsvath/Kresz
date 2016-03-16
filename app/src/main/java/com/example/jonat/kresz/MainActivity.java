@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
     public void vegeOnClick (View v){
         if (v.getId() == R.id.vege){
             Bundle b = new Bundle();
-            b.putInt("pont", 65);
+            b.putInt("pont", 0);
             Intent i = new Intent();
             i.setClass(this,Vege.class);
             i.putExtras(b);

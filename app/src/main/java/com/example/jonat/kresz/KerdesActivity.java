@@ -37,6 +37,8 @@ public class KerdesActivity extends Activity {
     private TextView feladat;
     private JSONObject obj;
     private int fszam, szam, temakor, helyes;
+    private ArrayList<Integer> rossz;
+    private int akt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +49,23 @@ public class KerdesActivity extends Activity {
         if (b != null) {
             temakor = b.getInt("temakor");
             szam = b.getInt("szam");
+            rossz = b.getIntegerArrayList("rossz");
         }
-        try {
-            obj = new JSONObject(loadJSONFromAsset());
-            fszam = getFeladatSzam(szam);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (rossz == null) {
+            try {
+                obj = new JSONObject(loadJSONFromAsset());
+                fszam = getFeladatSzam(szam);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else {
+            try {
+                obj = new JSONObject(loadJSONFromAsset());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            akt = 0;
+            fszam = rossz.get(akt);
         }
 
         findView();
@@ -96,12 +109,20 @@ public class KerdesActivity extends Activity {
 
     public void nextOnClick(View v) throws JSONException {
         if (v.getId() == R.id.next1) {
-            int db = obj.getJSONArray("groups").getJSONObject(temakor).
-                    getJSONArray("questions").length();
-            if (szam < db - 1) {
-                szam++;
-                mItems = null;
-                fszam = getFeladatSzam(szam);
+            if (rossz == null) {
+                int db = obj.getJSONArray("groups").getJSONObject(temakor).
+                        getJSONArray("questions").length();
+                if (szam < db - 1) {
+                    szam++;
+                    mItems = null;
+                    fszam = getFeladatSzam(szam);
+                }
+            }else {
+                if (akt<rossz.size()-1) {
+                    akt++;
+                    fszam = rossz.get(akt);
+                    mItems = null;
+                }
             }
             feladat(fszam);
         }
@@ -109,10 +130,18 @@ public class KerdesActivity extends Activity {
 
     public void backOnClick(View v) throws JSONException {
         if (v.getId() == R.id.back1) {
-            if (szam > 0) {
-                szam--;
-                mItems = null;
-                fszam = getFeladatSzam(szam);
+            if (rossz == null) {
+                if (szam > 0) {
+                    szam--;
+                    mItems = null;
+                    fszam = getFeladatSzam(szam);
+                }
+            }else {
+                if (akt>0){
+                    akt--;
+                    fszam = rossz.get(akt);
+                    mItems = null;
+                }
             }
             feladat(fszam);
         }

@@ -1,31 +1,70 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/vegeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/hatter">
 
-    <ProgressBar
-        android:id="@+id/circularProgressBar"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_centerInParent="true"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:max="100"
-        android:progressDrawable="@drawable/circular_progress_bar_red" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/progressBarTextView"
+        <ProgressBar
+            android:id="@+id/circularProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            android:max="100"
+            android:progressDrawable="@drawable/circular_progress_bar_red" />
+
+        <TextView
+            android:id="@+id/progressBarTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/pBPiros" />
+
+        <TextView
+            android:id="@+id/eredmenyUzenet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/circularProgressBar"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
+            android:textColor="@color/pBPiros" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textColor="@color/pBPiros"
-        android:text="pBar"/>
+        android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/eredmenyUzenet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/pBPiros"/>
+        <Button
+            android:id="@+id/rosszak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:padding="20dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/gomb_selector"
+            android:onClick="onClickRosszak"
+            android:text="Rosszak" />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/ujTeszt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="35dp"
+            android:padding="20dp"
+            android:layout_alignBottom="@+id/rosszak"
+            android:background="@drawable/gomb_selector"
+            android:onClick="onClickUj"
+            android:text="Új teszt" />
+
+    </RelativeLayout>
+</LinearLayout>

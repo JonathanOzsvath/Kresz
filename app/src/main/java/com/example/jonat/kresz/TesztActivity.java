@@ -1,6 +1,7 @@
 package com.example.jonat.kresz;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -31,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 public class TesztActivity extends Activity {
 
     private List<ListViewItem> mItems;
+    private ArrayList<Integer> rossz;
     private ImageView imageView;
     private ListView listView;
     private ListViewAdapter listViewAdapter;
@@ -65,16 +67,20 @@ public class TesztActivity extends Activity {
             aktfeladat = savedInstanceState.getInt("aktFeladat");
             aktpontszam = savedInstanceState.getInt("aktPontszam");
             time = (int) savedInstanceState.getLong("millis");
-            mItems = savedInstanceState.getParcelableArrayList("mItems");
+            if (aktfeladat<56) {
+                mItems = savedInstanceState.getParcelableArrayList("mItems");
+            }
             click = savedInstanceState.getInt("click");
             helyes = savedInstanceState.getInt("helyes");
             state = savedInstanceState.getParcelable("state");
+            rossz = savedInstanceState.getIntegerArrayList("rossz");
         } else {
             temakor = 0;
             aktfeladat = 1;
             aktpontszam = 0;
             click = -1;
             time = 60000;
+            rossz = new ArrayList<>();
 
             try {
                 Random r = new Random();
@@ -125,6 +131,7 @@ public class TesztActivity extends Activity {
                         changeColor(position, Color.RED);
                         changeColor(helyes, Color.GREEN);
                         Toast.makeText(TesztActivity.this, "rossz", Toast.LENGTH_LONG).show();
+                        rossz.add(szam);
                     }
 
                     listEnableDisable(false);
@@ -161,6 +168,19 @@ public class TesztActivity extends Activity {
 
     public void nextOnClick(View v) {
         if (v.getId() == R.id.next) {
+
+            if (aktfeladat == 55) {
+                aktfeladat++;
+                Bundle b = new Bundle();
+                b.putInt("pont", aktpontszam);
+                b.putIntegerArrayList("rossz", rossz);
+                Intent i = new Intent();
+                i.setClass(TesztActivity.this, Vege.class);
+                i.putExtras(b);
+                startActivity(i);
+                finish();
+            }
+
             try {
                 temakor++;
                 Random r = new Random();
@@ -182,6 +202,7 @@ public class TesztActivity extends Activity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
         }
     }
 
@@ -283,12 +304,21 @@ public class TesztActivity extends Activity {
         outState.putInt("aktFeladat", aktfeladat);
         outState.putInt("aktPontszam", aktpontszam);
         outState.putLong("millis", millis);
-        outState.putParcelableArrayList("mItems", (ArrayList<? extends Parcelable>) mItems);
+        if (aktfeladat < 56) {
+            outState.putParcelableArrayList("mItems", (ArrayList<? extends Parcelable>) mItems);
+        }
         outState.putInt("click", click);
         outState.putInt("helyes", helyes);
         outState.putParcelable("state", state);
+        outState.putIntegerArrayList("rossz", rossz);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Bundle bundle = new Bundle();
+        onSaveInstanceState(bundle);
+    }
 
     public class CounterClass extends CountDownTimer {
 
