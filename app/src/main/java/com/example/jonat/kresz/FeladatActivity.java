@@ -1,5 +1,6 @@
 package com.example.jonat.kresz;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.example.jonat.kresz.Adapter.FeladatListViewAdapter;
 import com.example.jonat.kresz.Data.FeladatListViewItem;
@@ -20,16 +22,18 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeladatActivity extends ListActivity {
+public class FeladatActivity extends Activity {
 
     private List<FeladatListViewItem> mItems;
     private FeladatListViewAdapter feladatListViewAdapter;
+    private ListView listView;
     private JSONObject obj;
     private int temakor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_feladatlist);
 
         Bundle b = getIntent().getExtras();
         if (b != null){
@@ -54,10 +58,11 @@ public class FeladatActivity extends ListActivity {
             e.printStackTrace();
         }
 
+        listView = (ListView) findViewById(R.id.feladatList);
         feladatListViewAdapter = new FeladatListViewAdapter(getApplication(),mItems);
-        setListAdapter(feladatListViewAdapter);
+        listView.setAdapter(feladatListViewAdapter);
 
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle b = new Bundle();

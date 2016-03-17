@@ -4,10 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.jonat.kresz.Data.FeladatListViewItem;
+import com.example.jonat.kresz.Data.TemakorListViewItem;
 import com.example.jonat.kresz.R;
 
 import java.util.List;
@@ -15,40 +17,34 @@ import java.util.List;
 /**
  * Created by jonat on 2016. 03. 01..
  */
-public class FeladatListViewAdapter extends BaseAdapter {
+public class FeladatListViewAdapter extends ArrayAdapter<FeladatListViewItem> {
 
-    private final List<FeladatListViewItem> listViewItems;
-
-    public FeladatListViewAdapter(Context applicationContext, List<FeladatListViewItem> listViewItems) {
-        this.listViewItems = listViewItems;
-    }
-
-    @Override
-    public int getCount() {
-        return listViewItems.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return listViewItems.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
+    public FeladatListViewAdapter(Context context, List<FeladatListViewItem> listViewItems) {
+        super(context, R.layout.feladat_listview_item, listViewItems);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final FeladatListViewItem feladatListViewItem = listViewItems.get(position);
+        ViewHolder viewHolder;
 
-        LayoutInflater inflater = (LayoutInflater) parent.getContext().
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View itemView = inflater.inflate(R.layout.feladat_listview_item,null);
+        if (convertView == null){
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.feladat_listview_item,parent,false);
 
-        TextView textView = (TextView) itemView.findViewById(R.id.feladatCim);
-        textView.setText(feladatListViewItem.feladatCim);
+            viewHolder = new ViewHolder();
+            viewHolder.textView = (TextView) convertView.findViewById(R.id.feladatCim);
+            convertView.setTag(viewHolder);
+        }else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
 
-        return itemView;
+        FeladatListViewItem item = getItem(position);
+        viewHolder.textView.setText(item.feladatCim);
+
+        return convertView;
+    }
+
+    private static class ViewHolder {
+        TextView textView;
     }
 }

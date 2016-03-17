@@ -1,5 +1,6 @@
 package com.example.jonat.kresz;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,15 +23,17 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TemakorActivity extends ListActivity {
+public class TemakorActivity extends Activity {
 
     private List<TemakorListViewItem> mItems;
     private TemakorListViewAdapter temakorListViewAdapter;
+    private ListView listView;
     private JSONObject obj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_temakor);
 
         try {
             obj = new JSONObject(loadJSONFromAsset());
@@ -45,16 +48,17 @@ public class TemakorActivity extends ListActivity {
             e.printStackTrace();
         }
 
-        temakorListViewAdapter = new TemakorListViewAdapter(getApplicationContext(),mItems);
-        setListAdapter(temakorListViewAdapter);
+        listView = (ListView) findViewById(R.id.temakorList);
+        temakorListViewAdapter = new TemakorListViewAdapter(TemakorActivity.this,mItems);
+        listView.setAdapter(temakorListViewAdapter);
 
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle b = new Bundle();
                 b.putInt("temakor", position);
                 Intent i = new Intent();
-                i.setClass(TemakorActivity.this,FeladatActivity.class);
+                i.setClass(TemakorActivity.this, FeladatActivity.class);
                 i.putExtras(b);
                 startActivity(i);
             }
